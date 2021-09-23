@@ -1,0 +1,255 @@
+count_t=0
+count_s=0
+count_c=[]
+count_ie=0
+count_iei=0
+num=0
+stack=[]
+def count_total(sign,*x):
+    k=x[0]
+    global count_t
+    for l in k:
+        sign=0
+        while(sign<len(l)):
+            if l[sign] == 'a':
+                if l[sign:sign+4] == 'auto':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'b':
+                if l[sign:sign+5] == 'break':
+                    count_t+=1
+                    sign=sign+5
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'c':
+                if l[sign:sign+4] == 'case':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                elif l[sign:sign+4] == 'char':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                elif l[sign:sign+5] == 'const':
+                    count_t+=1
+                    sign=sign+5
+                    continue
+                elif l[sign:sign+8] == 'continue':
+                    count_t+=1
+                    sign=sign+8
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'd':
+                if l[sign:sign+7] == 'default':
+                    count_t+=1
+                    sign=sign+7
+                    continue
+                elif l[sign:sign+2] == 'do':
+                    count_t+=1
+                    sign=sign+2
+                    continue
+                elif l[sign:sign+6] == 'double':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'e':
+                if l[sign:sign+4] == 'else':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                elif l[sign:sign+4] == 'enum':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                elif l[sign:sign+6] == 'extern':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'f':
+                if l[sign:sign+5] == 'float':
+                    count_t+=1
+                    sign=sign+5
+                    continue
+                elif l[sign:sign+3] == 'for':
+                    count_t+=1
+                    sign=sign+3
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'g':
+                if l[sign:sign+4] == 'goto':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'i':
+                if l[sign:sign+2] == 'if':
+                    count_t+=1
+                    sign=sign+2
+                    continue
+                elif l[sign:sign+3] == 'int':
+                    count_t+=1
+                    sign=sign+3
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'l':
+                if l[sign:sign+4] == 'long':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'r':
+                if l[sign:sign+8] == 'register':
+                    count_t+=1
+                    sign=sign+8
+                    continue
+                elif l[sign:sign+6] == 'return':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 's':
+                if l[sign:sign+5] == 'short':
+                    count_t+=1
+                    sign=sign+5
+                    continue
+                elif l[sign:sign+6] == 'signed':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                elif l[sign:sign+6] == 'sizeof':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                elif l[sign:sign+6] == 'static':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                elif l[sign:sign+6] == 'struct':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                elif l[sign:sign+6] == 'switch':
+                    count_t+=1
+                    sign=sign+6
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 't':
+                if l[sign:sign+7] == 'typedef':
+                    count_t+=1
+                    sign=sign+7
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'u':
+                if l[sign:sign+5] == 'union':
+                    count_t+=1
+                    sign=sign+5
+                    continue
+                elif l[sign:sign+8] == 'unsigned':
+                    count_t+=1
+                    sign=sign+8
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'v':
+                if l[sign:sign+4] == 'void':
+                    count_t+=1
+                    sign=sign+4
+                    continue
+                elif l[sign:sign+8] == 'volatile':
+                    count_t+=1
+                    sign=sign+8
+                    continue
+                else:
+                    sign+=1
+                    continue
+            if l[sign] == 'w':
+                if l[sign:sign+5] == 'while':
+                    count_t+=1
+                    sign=sign+5
+                    continue
+                else:
+                    sign+=1
+                    continue
+            sign+=1
+def count_switch(count_sw,num,*x):
+    l=x[0]
+    if l[0] == 's' and l[1] == 'w':
+        global count_s
+        count_s+=1
+        count_case(0,num)
+def count_case(count_ca,p):
+    while (txt[p][0]!='d'):
+        if txt[p][0]=='c':
+            count_ca+=1
+        p+=1
+    count_c.append(count_ca)
+def count_ifelse(count__ie,*x):
+    l=x[0]
+    flag=0
+    global count_ie
+    global count_iei
+    if l[0] == 'i' and l[1] == 'f':
+        stack.append(1)
+    if l[0] == 'e' and l[4] == 'i':
+        stack.append(3)
+    elif l[0] == 'e' and l[1] == 'l':
+        while (stack[-1] != 1):
+            if (stack[-1] == 3):
+                flag=1
+            stack.pop()
+        stack.pop()
+        if flag == 0:
+            count_ie+=1
+        if flag ==1:
+            count_iei+=1
+add=input("请输入代码存放的地址：")
+f = open(add,encoding="utf-8")#主函数开始
+txt = []
+for line in f:#按行读入文件
+    line = line.replace('\n',"").replace(' ',"").replace('\xa0',"")
+    txt.append(line)
+level=input("请输入需要完成的等级：")
+level=int(level)
+count_total(0,txt)
+for x in txt:
+    count_switch(count_s,num,x)
+    count_ifelse(count_ie,x)
+    num+=1
+if level >= 1:
+    print('total num: ',count_t)
+if level >= 2:
+    print('switch num: ',count_s)
+    print('case num: ',count_c)
+if level >= 3:
+    print('if-else num: ',count_ie)
+if level >= 4:
+    print('if-elseif-else num: ',count_iei)
